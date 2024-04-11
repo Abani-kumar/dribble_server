@@ -10,8 +10,8 @@ export const auth = asyncHandler(async (req, res, next) => {
       req.body?.accessToken ||
       req?.header("Authorization")?.replace("Bearer ", "");
 
-      console.log(req.body)
-      console.log(token);
+      // console.log(req.body)
+      // console.log(token);
     if (!token) {
       throw new ApiError(401, "unauthorised token");
     }

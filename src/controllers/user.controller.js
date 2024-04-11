@@ -126,17 +126,10 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const refreshAccessToken = asyncHandler(async (req, res) => {
-  //fetched refreshToken from cookies or from req.body
-  //validate
-  //verify by jwt_secret and extract id
-  //search user by extractid
-  //if user not exist then invalid refresh token
-  //user refreshtoken ===incoming refreshtoken
-  //generate access token ann refreshtoken and send in cookie
 
   const refresh_Token = req.cookies.refreshToken || req.body.refreshToken;
 
-  const incomingRefreshToken = JSON.parse(refresh_Token);
+  const incomingRefreshToken = refresh_Token;
   if (!incomingRefreshToken) {
     throw new ApiError(401, "Nonauthorised request");
   }
@@ -166,7 +159,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       user._id
     );
 
-    // console.log(accessToken);
+    // console.log("access token",accessToken);
     return res
       .status(200)
       .cookie("accessToken", accessToken, access_options)
@@ -257,7 +250,6 @@ export const verification = asyncHandler(async (req, res) => {
 export const updateProfile = asyncHandler(async (req, res) => {
   const { location, profession } = req.body;
   const profilePicture = req.files.profilePicture;
-  // console.log(req.body)
 
   if (!location || !profession || !profilePicture) {
     throw new ApiError(401, "Missing field");
@@ -279,21 +271,15 @@ export const updateProfile = asyncHandler(async (req, res) => {
   }
 
   const updateUser = await User.findByIdAndUpdate(
-    userId ,
+    userId,
     { location, avatarUrl: upload?.secure_url, profession },
     { new: true }
   );
-  updateUser.password=undefined;
+  updateUser.password = undefined;
 
   return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          { user:updateUser },
-          "profile update successfully"
-        )
-      );
+    .status(200)
+    .json(
+      new ApiResponse(200, { user: updateUser }, "profile update successfully")
+    );
 });
-
-
