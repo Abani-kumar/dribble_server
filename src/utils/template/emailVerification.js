@@ -72,7 +72,7 @@ const verificationTemplate = (link) => {
 			<div class="body">
 				<p>Dear User,</p>
 				<p>Thank you for registering with Dribbble.This is verification email from Dribbbl , please use the following link to verify your account:</p>
-				<a href=${link} class="highlight">${link}</a>
+				<a href=${link} class="highlight">verify your email</a>
 				<p>If you did not request this verification, please disregard this email.
 				Once your account is verified, you will have access to extra features of our platform.</p>
 			</div>
